@@ -1,0 +1,6 @@
+Rate_ID,Category,Item,Rate,Currency,Rate_Basis,Node_From,Node_To,Ch_Code,Min_Charge,Effective_From,Source
+FTL-INBOUND_FTL-BINH_DUONG,FTL,"Dedicated trailer, supplier region to consolidation warehouse (BINH_DUONG)",640.00,USD,Per Trailer Load,BINH_DUONG,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-HANGZHOU,FTL,"Dedicated trailer, supplier region to consolidation warehouse (HANGZHOU)",940.00,USD,Per Trailer Load,HANGZHOU,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-HCMC,FTL,"Dedicated trailer, supplier region to consolidation warehouse (HCMC)",520.00,USD,Per Trailer Load,HCMC,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-NINGBO,FTL,"Dedicated trailer, supplier region to consolidation warehouse (NINGBO)",720.00,USD,Per Trailer Load,NINGBO,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-SUZHOU,FTL,"Dedicated trailer, supplier region to consolidation warehouse (SUZHOU)",1050.00,USD,Per Trailer Load,SUZHOU,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT

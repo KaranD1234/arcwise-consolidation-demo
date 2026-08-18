@@ -1,0 +1,96 @@
+{
+  "default": "northgate",
+  "scenarios": [
+    {
+      "billing": {
+        "destination": "itemised",
+        "origin": "itemised",
+        "origin_drayage_share": 0.55
+      },
+      "bundled_codes": [],
+      "charge_lines": 5224,
+      "containers_today": 521,
+      "distinct_charge_codes": 35,
+      "has_ftl_quote": true,
+      "id": "northgate",
+      "invoiced_usd": 8775602.87,
+      "name": "Northgate Supply Co. (UK)",
+      "origins": [
+        "Ho Chi Minh City, Vietnam",
+        "Ningbo, China"
+      ],
+      "ports": [
+        "Felixstowe, United Kingdom",
+        "Hamburg, Germany",
+        "Rotterdam, Netherlands",
+        "Valencia, Spain"
+      ],
+      "shipments": 1199,
+      "short": "Northgate",
+      "sites": 12,
+      "summary": "Every EXW charge on its own coded line, and delivery itemised too.",
+      "suppliers": 21
+    },
+    {
+      "billing": {
+        "destination": "itemised",
+        "origin": "bundled",
+        "origin_drayage_share": 0.0
+      },
+      "bundled_codes": [
+        "1630"
+      ],
+      "charge_lines": 3387,
+      "containers_today": 423,
+      "distinct_charge_codes": 28,
+      "has_ftl_quote": true,
+      "id": "calderwood",
+      "invoiced_usd": 7121091.6,
+      "name": "Calderwood Brands GmbH (DE)",
+      "origins": [
+        "Chennai, India",
+        "Qingdao, China"
+      ],
+      "ports": [
+        "Gdansk, Poland",
+        "Hamburg, Germany",
+        "Rotterdam, Netherlands"
+      ],
+      "shipments": 1016,
+      "short": "Calderwood",
+      "sites": 10,
+      "summary": "Origin billed as one all-in line; freight and delivery itemised.",
+      "suppliers": 19
+    },
+    {
+      "billing": {
+        "destination": "bundled",
+        "origin": "bundled",
+        "origin_drayage_share": 0.0
+      },
+      "bundled_codes": [
+        "1300",
+        "1630"
+      ],
+      "charge_lines": 2048,
+      "containers_today": 263,
+      "distinct_charge_codes": 27,
+      "has_ftl_quote": false,
+      "id": "meritt",
+      "invoiced_usd": 4640181.14,
+      "name": "Meritt Hardware Group S.A. (ES)",
+      "origins": [
+        "Shenzhen, China"
+      ],
+      "ports": [
+        "Barcelona, Spain",
+        "Valencia, Spain"
+      ],
+      "shipments": 722,
+      "short": "Meritt",
+      "sites": 7,
+      "summary": "Origin bundled, and freight billed port-to-door on a single line.",
+      "suppliers": 12
+    }
+  ]
+}

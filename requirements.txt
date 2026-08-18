@@ -1,0 +1,8 @@
+# Pinned to the versions this demo was built and rehearsed against.
+# Fuzzy matching in engine/resolve.py uses stdlib difflib, so there is no
+# extra dependency for it. The workbook writer uses openpyxl, not xlsxwriter.
+streamlit==1.58.0
+pandas==2.2.3
+numpy==2.1.3
+plotly==5.24.1
+openpyxl==3.1.5

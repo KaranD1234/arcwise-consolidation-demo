@@ -1,0 +1,7 @@
+# Demo fixtures are identified by exact bytes. Preserve the generator's CSV line endings
+# on every platform so a cloud checkout remains the same rehearsed dataset.
+*.csv -text
+
+# Binary assets should never be passed through Git's text conversion.
+*.png binary
+*.woff2 binary

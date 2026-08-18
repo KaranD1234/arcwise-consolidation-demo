@@ -1,0 +1,77 @@
+{
+  "billing": {
+    "destination": "itemised",
+    "origin": "bundled",
+    "origin_drayage_share": 0.0
+  },
+  "bundling": {
+    "codes": {
+      "1630": {
+        "covers": [
+          "1631",
+          "1632",
+          "1633",
+          "1634",
+          "1635",
+          "1636",
+          "1637"
+        ],
+        "rows": 176,
+        "usd": 366937.56
+      }
+    },
+    "destination": "itemised",
+    "origin": "bundled"
+  },
+  "charge_lines": 3387,
+  "client": "Calderwood Brands GmbH (DE)",
+  "generated_by": "generator/make_demo_data.py",
+  "history_window": [
+    "2025-01-06",
+    "2026-06-26"
+  ],
+  "in_scope": {
+    "cbm": 18991.9,
+    "containers_today": 423,
+    "definition": "ocean freight on EXW or FOB terms with a mapped origin",
+    "fcl_groups": 259,
+    "invoiced_usd": 3292321.08,
+    "pallets": 14578,
+    "shipment_groups": 304
+  },
+  "invoices": 760,
+  "master_bills": 777,
+  "mess": {
+    "blank_equipment_rows": 2372,
+    "blank_equipment_share": 0.7003,
+    "code_1638_spellings": 4,
+    "distinct_charge_codes": 28,
+    "related_sentinel_rows": 2371,
+    "related_sentinel_share": 0.7,
+    "unrecognised_code_rows": 0,
+    "unrecognised_code_usd": 0,
+    "unrecognised_codes": []
+  },
+  "rate_coverage": {
+    "dest_carded": 3,
+    "dest_lanes": 10,
+    "ocean_carded": 2,
+    "ocean_lanes": 6,
+    "origin_carded": 5,
+    "origin_regions": 5
+  },
+  "reference_files": {
+    "consolidation_quote_rows": 6,
+    "door_charges_rows": 8,
+    "ftl_rate_card_rows": 5,
+    "port_and_ocean_rows": 35,
+    "reference_pack_rows": 49,
+    "sites_in_world": 10
+  },
+  "scenario": "calderwood",
+  "seed": 20260818,
+  "shipment_groups": 760,
+  "shipments": 1016,
+  "summary": "Origin billed as one all-in line; freight and delivery itemised.",
+  "total_invoiced_usd": 7121091.6
+}

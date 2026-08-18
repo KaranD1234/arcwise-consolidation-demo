@@ -1,0 +1,84 @@
+{
+  "billing": {
+    "destination": "bundled",
+    "origin": "bundled",
+    "origin_drayage_share": 0.0
+  },
+  "bundling": {
+    "codes": {
+      "1300": {
+        "covers": [
+          "1301",
+          "1638"
+        ],
+        "rows": 220,
+        "usd": 1370163.36
+      },
+      "1630": {
+        "covers": [
+          "1631",
+          "1632",
+          "1633",
+          "1634",
+          "1635",
+          "1636",
+          "1637"
+        ],
+        "rows": 105,
+        "usd": 159208.54
+      }
+    },
+    "destination": "bundled",
+    "origin": "bundled"
+  },
+  "charge_lines": 2048,
+  "client": "Meritt Hardware Group S.A. (ES)",
+  "generated_by": "generator/make_demo_data.py",
+  "history_window": [
+    "2025-01-06",
+    "2026-06-26"
+  ],
+  "in_scope": {
+    "cbm": 15198.7,
+    "containers_today": 263,
+    "definition": "ocean freight on EXW or FOB terms with a mapped origin",
+    "fcl_groups": 191,
+    "invoiced_usd": 1542570.29,
+    "pallets": 11033,
+    "shipment_groups": 197
+  },
+  "invoices": 520,
+  "master_bills": 529,
+  "mess": {
+    "blank_equipment_rows": 1472,
+    "blank_equipment_share": 0.7188,
+    "code_1638_spellings": 4,
+    "distinct_charge_codes": 27,
+    "related_sentinel_rows": 1326,
+    "related_sentinel_share": 0.6475,
+    "unrecognised_code_rows": 0,
+    "unrecognised_code_usd": 0,
+    "unrecognised_codes": []
+  },
+  "rate_coverage": {
+    "dest_carded": 7,
+    "dest_lanes": 7,
+    "ocean_carded": 2,
+    "ocean_lanes": 2,
+    "origin_carded": 3,
+    "origin_regions": 3
+  },
+  "reference_files": {
+    "consolidation_quote_rows": 6,
+    "door_charges_rows": 10,
+    "port_and_ocean_rows": 22,
+    "reference_pack_rows": 38,
+    "sites_in_world": 7
+  },
+  "scenario": "meritt",
+  "seed": 20260819,
+  "shipment_groups": 520,
+  "shipments": 722,
+  "summary": "Origin bundled, and freight billed port-to-door on a single line.",
+  "total_invoiced_usd": 4640181.14
+}

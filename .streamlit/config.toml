@@ -1,0 +1,76 @@
+# Arcwise design tokens, ported from
+# Codebase/arcwise/shared/theme/GeneralArcwiseThemeV2.ts. Keep in sync with app/theme.py.
+#
+# Everything here that *can* be a theme option is one, rather than a CSS override. Two
+# reasons. Streamlit derives colours it never exposes to CSS -- the tint behind a bordered
+# container, the widget focus ring -- from these values, so overriding downstream leaves
+# those subtly off. And the dataframe draws its text to a canvas, which no stylesheet
+# reaches: without `font` and `fontFaces` set here, every table in the app renders in the
+# system sans while the page around it is in Inter.
+[theme]
+base = "light"
+primaryColor = "#0D2E5E"              # blue.6
+backgroundColor = "#FBFCFE"           # other.pageBg
+secondaryBackgroundColor = "#FFFFFF"  # other.cardBg
+textColor = "#3D4E63"                 # dark.6 — Mantine's default Text colour
+linkColor = "#2E5F9A"                 # blue.5 — Anchor default
+linkUnderline = false
+borderColor = "#E8EDF5"               # dark.2
+dataframeBorderColor = "#E8EDF5"
+dataframeHeaderBackgroundColor = "#F4F7FB"
+showWidgetBorder = true
+
+# theme.defaultRadius = 6, radius.sm = 6px.
+baseRadius = "6px"
+buttonRadius = "6px"
+
+# lineHeight 1.6 on 14px body; the Title scale at weight 500 with no tracking.
+baseFontSize = 14
+baseFontWeight = 400
+headingFontSizes = ["28px", "24px", "20px", "16px", "14px", "12px"]
+headingFontWeights = [500, 500, 500, 500, 500, 500]
+
+font = "Inter"
+headingFont = "Inter"
+codeFont = "ui-monospace, SFMono-Regular, Menlo, monospace"
+codeFontSize = "12px"
+metricValueFontSize = "28px"
+metricValueFontWeight = 500
+
+# The one font the product uses, served from app/static rather than a CDN.
+fontFaces = [
+  { family = "Inter", url = "app/static/InterVariable.woff2", weight = "100 900", style = "normal" },
+]
+
+# The semantic ramps Streamlit paints st.error / st.success / st.info with. Left to
+# themselves they are Streamlit's own reds and greens, which sit beside ours and read as
+# a second palette.
+greenColor = "#10B981"
+greenTextColor = "#166534"
+greenBackgroundColor = "#ECFDF5"
+redColor = "#C0362A"
+redTextColor = "#991B1B"
+redBackgroundColor = "#FEF2F2"
+orangeColor = "#F59E0B"
+orangeTextColor = "#B45309"
+orangeBackgroundColor = "#FFF4E6"
+blueColor = "#2E5F9A"
+blueTextColor = "#0D2E5E"
+blueBackgroundColor = "#EBF2FA"
+grayColor = "#8A97AB"
+grayTextColor = "#3D4E63"
+grayBackgroundColor = "#F4F7FB"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+# The demo is presented full-screen on a screenshare. Hiding the toolbar is the single
+# biggest thing that stops this reading as a Streamlit script.
+toolbarMode = "minimal"
+showErrorDetails = true
+
+[server]
+runOnSave = true
+# Serves app/static/ at /app/static/, which is where fontFaces above reads Inter from.
+enableStaticServing = true

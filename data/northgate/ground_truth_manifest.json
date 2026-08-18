@@ -1,0 +1,63 @@
+{
+  "billing": {
+    "destination": "itemised",
+    "origin": "itemised",
+    "origin_drayage_share": 0.55
+  },
+  "bundling": {
+    "codes": {},
+    "destination": "itemised",
+    "origin": "itemised"
+  },
+  "charge_lines": 5224,
+  "client": "Northgate Supply Co. (UK)",
+  "generated_by": "generator/make_demo_data.py",
+  "history_window": [
+    "2025-01-06",
+    "2026-06-26"
+  ],
+  "in_scope": {
+    "cbm": 19374.1,
+    "containers_today": 521,
+    "definition": "ocean freight on EXW or FOB terms with a mapped origin",
+    "fcl_groups": 292,
+    "invoiced_usd": 4121128.3,
+    "pallets": 15045,
+    "shipment_groups": 342
+  },
+  "invoices": 900,
+  "master_bills": 913,
+  "mess": {
+    "blank_equipment_rows": 4115,
+    "blank_equipment_share": 0.7877,
+    "code_1638_spellings": 4,
+    "distinct_charge_codes": 35,
+    "related_sentinel_rows": 4025,
+    "related_sentinel_share": 0.7705,
+    "unrecognised_code_rows": 0,
+    "unrecognised_code_usd": 0,
+    "unrecognised_codes": []
+  },
+  "rate_coverage": {
+    "dest_carded": 8,
+    "dest_lanes": 12,
+    "ocean_carded": 6,
+    "ocean_lanes": 8,
+    "origin_carded": 3,
+    "origin_regions": 5
+  },
+  "reference_files": {
+    "consolidation_quote_rows": 6,
+    "door_charges_rows": 12,
+    "ftl_rate_card_rows": 5,
+    "port_and_ocean_rows": 27,
+    "reference_pack_rows": 45,
+    "sites_in_world": 12
+  },
+  "scenario": "northgate",
+  "seed": 20260817,
+  "shipment_groups": 900,
+  "shipments": 1199,
+  "summary": "Every EXW charge on its own coded line, and delivery itemised too.",
+  "total_invoiced_usd": 8775602.87
+}

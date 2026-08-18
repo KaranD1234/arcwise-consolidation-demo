@@ -1,0 +1,6 @@
+Rate_ID,Category,Item,Rate,Currency,Rate_Basis,Node_From,Node_To,Ch_Code,Min_Charge,Effective_From,Source
+FTL-INBOUND_FTL-CHENNAI,FTL,"Dedicated trailer, supplier region to consolidation warehouse (CHENNAI)",825.00,USD,Per Trailer Load,CHENNAI,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-COIMBATORE,FTL,"Dedicated trailer, supplier region to consolidation warehouse (COIMBATORE)",1050.00,USD,Per Trailer Load,COIMBATORE,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-QINGDAO,FTL,"Dedicated trailer, supplier region to consolidation warehouse (QINGDAO)",785.00,USD,Per Trailer Load,QINGDAO,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-WEIFANG,FTL,"Dedicated trailer, supplier region to consolidation warehouse (WEIFANG)",1100.00,USD,Per Trailer Load,WEIFANG,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+FTL-INBOUND_FTL-YANTAI,FTL,"Dedicated trailer, supplier region to consolidation warehouse (YANTAI)",990.00,USD,Per Trailer Load,YANTAI,consolidation warehouse,INBOUND_FTL,,2025-01-01,QUOTED_NOT_YET_BOUGHT

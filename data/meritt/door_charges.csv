@@ -1,0 +1,11 @@
+Rate_ID,Category,Item,Rate,Currency,Rate_Basis,Node_From,Node_To,Ch_Code,Min_Charge,Effective_From,Source
+ORIG-DONGGUAN-1631,ORIGIN_COMPONENT,EXW Collection (DONGGUAN),560.00,USD,Per Container,DONGGUAN,DONGGUAN port,1631,,2025-01-01,CLIENT_RATE_CARD
+ORIG-FOSHAN-1631,ORIGIN_COMPONENT,EXW Collection (FOSHAN),745.00,USD,Per Container,FOSHAN,FOSHAN port,1631,,2025-01-01,CLIENT_RATE_CARD
+ORIG-SHENZHEN-1631,ORIGIN_COMPONENT,EXW Collection (SHENZHEN),430.00,USD,Per Container,SHENZHEN,SHENZHEN port,1631,,2025-01-01,CLIENT_RATE_CARD
+DEST-BAR-GRANOLLE,DEST_DELIVERY,"Port Barcelona, Spain to warehouse Granollers, ES",580.00,USD,Per Container,"Barcelona, Spain","Granollers, ES",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-BAR-PERPIGNA,DEST_DELIVERY,"Port Barcelona, Spain to warehouse Perpignan, FR",1020.00,USD,Per Container,"Barcelona, Spain","Perpignan, FR",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-BAR-ZARAGOZA,DEST_DELIVERY,"Port Barcelona, Spain to warehouse Zaragoza, ES",1185.00,USD,Per Container,"Barcelona, Spain","Zaragoza, ES",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-ALICANTE,DEST_DELIVERY,"Port Valencia, Spain to warehouse Alicante, ES",890.00,USD,Per Container,"Valencia, Spain","Alicante, ES",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-LISBOA,DEST_DELIVERY,"Port Valencia, Spain to warehouse Lisboa, PT",2340.00,USD,Per Container,"Valencia, Spain","Lisboa, PT",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-MADRID,DEST_DELIVERY,"Port Valencia, Spain to warehouse Madrid, ES",1560.00,USD,Per Container,"Valencia, Spain","Madrid, ES",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-RIBARROJ,DEST_DELIVERY,"Port Valencia, Spain to warehouse Ribarroja, ES",615.00,USD,Per Container,"Valencia, Spain","Ribarroja, ES",1638,,2025-01-01,CLIENT_RATE_CARD

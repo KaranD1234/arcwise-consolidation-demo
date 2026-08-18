@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+.claude/
+.streamlit/secrets.toml
+.env
+.env.*
+
+# Generated deliverables. The inputs in data/ are committed because the demo has to
+# be reproducible from a clean checkout; anything the engine writes is not.
+*.xlsx

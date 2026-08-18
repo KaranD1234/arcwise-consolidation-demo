@@ -1,0 +1,13 @@
+Rate_ID,Category,Item,Rate,Currency,Rate_Basis,Node_From,Node_To,Ch_Code,Min_Charge,Effective_From,Source
+ORIG-HANGZHOU-1631,ORIGIN_COMPONENT,EXW Collection (HANGZHOU),880.00,USD,Per Container,HANGZHOU,HANGZHOU port,1631,,2025-01-01,CLIENT_RATE_CARD
+ORIG-NINGBO-1631,ORIGIN_COMPONENT,EXW Collection (NINGBO),640.00,USD,Per Container,NINGBO,NINGBO port,1631,,2025-01-01,CLIENT_RATE_CARD
+ORIG-SUZHOU-1631,ORIGIN_COMPONENT,EXW Collection (SUZHOU),1045.00,USD,Per Container,SUZHOU,SUZHOU port,1631,,2025-01-01,CLIENT_RATE_CARD
+ORIG-MISC-1602,ORIGIN_COMPONENT,Origin Drayage to Port,310.00,USD,Per Container,,,1602,,2025-01-01,CLIENT_RATE_CARD
+DEST-FEL-CORBY,DEST_DELIVERY,"Port Felixstowe, United Kingdom to warehouse Corby, UK",1795.00,USD,Per Container,"Felixstowe, United Kingdom","Corby, UK",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-FEL-LUTTERWO,DEST_DELIVERY,"Port Felixstowe, United Kingdom to warehouse Lutterworth, UK",1840.00,USD,Per Container,"Felixstowe, United Kingdom","Lutterworth, UK",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-HAM-BREMEN,DEST_DELIVERY,"Port Hamburg, Germany to warehouse Bremen, DE",1720.00,USD,Per Container,"Hamburg, Germany","Bremen, DE",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-HAM-DUISBURG,DEST_DELIVERY,"Port Hamburg, Germany to warehouse Duisburg, DE",2140.00,USD,Per Container,"Hamburg, Germany","Duisburg, DE",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-ROT-TILBURG,DEST_DELIVERY,"Port Rotterdam, Netherlands to warehouse Tilburg, NL",1610.00,USD,Per Container,"Rotterdam, Netherlands","Tilburg, NL",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-ROT-VENLO,DEST_DELIVERY,"Port Rotterdam, Netherlands to warehouse Venlo, NL",1485.00,USD,Per Container,"Rotterdam, Netherlands","Venlo, NL",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-VALENCIA,DEST_DELIVERY,"Port Valencia, Spain to warehouse Valencia, ES",985.00,USD,Per Container,"Valencia, Spain","Valencia, ES",1638,,2025-01-01,CLIENT_RATE_CARD
+DEST-VAL-ZARAGOZA,DEST_DELIVERY,"Port Valencia, Spain to warehouse Zaragoza, ES",1560.00,USD,Per Container,"Valencia, Spain","Zaragoza, ES",1638,,2025-01-01,CLIENT_RATE_CARD

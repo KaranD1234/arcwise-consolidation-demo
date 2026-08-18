@@ -1,0 +1,7 @@
+Rate_ID,Category,Item,Rate,Currency,Rate_Basis,Node_From,Node_To,Ch_Code,Min_Charge,Effective_From,Source
+CONSOL-CFS_DRAYAGE,CONSOLIDATION,"Warehouse to Shenzhen/Yantian port, per container",295.00,USD,Per Container,,,CFS_DRAYAGE,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+CONSOL-CFS_FREE_DAYS,CONSOLIDATION,Free storage period before storage bills,10.00,USD,Days,,,CFS_FREE_DAYS,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+CONSOL-CFS_HANDLING,CONSOLIDATION,Warehouse handling per container built,925.00,USD,Per Container,,,CFS_HANDLING,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+CONSOL-CFS_INBOUND,CONSOLIDATION,"Receiving an inbound delivery: unload, check, put away",130.00,USD,Per Inbound Delivery,,,CFS_INBOUND,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+CONSOL-CFS_STORAGE,CONSOLIDATION,Storage beyond the free period,0.38,USD,Per CBM Per Day,,,CFS_STORAGE,,2025-01-01,QUOTED_NOT_YET_BOUGHT
+CONSOL-DECONSOL,CONSOLIDATION,Destination strip and onward local delivery,910.00,USD,Per Extra Site,,,DECONSOL,,2025-01-01,QUOTED_NOT_YET_BOUGHT
