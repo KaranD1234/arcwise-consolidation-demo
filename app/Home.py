@@ -414,8 +414,6 @@ def nav(back=None, forward=None, forward_label="Continue", disabled=False,
 def step_data():
     UI.eyebrow("Step 1 of 6")
     UI.h("Start with your charge lines", 2)
-    UI.lede("Straight out of your billing system. No cleaning — messy is what the engine "
-            "is built to read.")
 
     up = st.file_uploader("Charge-line export (CSV)", type=["csv"],
                           label_visibility="collapsed")
@@ -449,11 +447,11 @@ def step_data():
             f"{len(st_['terms'])} shipping terms",
             cls="aw-micro", style="margin:-6px 0 16px 2px;")
 
-    UI.eyebrow("What the engine had to deal with")
+    UI.eyebrow("Data quality findings")
     for f in ing.findings:
         if f.narrate:
             UI.finding(f.headline)
-    with st.expander("Everything else it found"):
+    with st.expander("Other findings"):
         for f in ing.findings:
             if not f.narrate:
                 UI.h(f.headline, 5, margin="10px 0 2px 0")
@@ -516,7 +514,7 @@ def step_references():
     read like something you had to study before you were allowed to continue.
     """
     UI.eyebrow("Step 2 of 6")
-    UI.h("What we can use from you", 2)
+    UI.h("Add reference files", 2)
 
     # Before anything is drawn, so every row below reflects the files just dropped in.
     errors = take_pending_uploads()
@@ -564,8 +562,8 @@ def step_references():
     # A single uploader for all of them. The files carry a Category column, so the engine
     # identifies what it has been given rather than asking the user to route it -- which
     # is also why three separate dropzones were the wrong shape.
-    UI.note("Drop them in together or one at a time — we identify each file from its "
-            "columns.", style="margin:16px 0 6px 2px;")
+    UI.note("Files are identified by their columns; upload them together or separately.",
+            style="margin:16px 0 6px 2px;")
     st.file_uploader("Reference files (CSV)", type=["csv"],
                      key=f"ref_any_{S.ref_round}", on_change=take_pending_uploads,
                      label_visibility="collapsed", accept_multiple_files=True)
@@ -722,10 +720,9 @@ def step_resolve():
     res = cached_resolution(S.charge_bytes, S.site_list_bytes)
     rs = res.stats
 
-    UI.h("A few things we will not guess", 2)
-    UI.lede(f"<b>{rs['auto_resolved']} of {rs['mappings_total']}</b> mappings resolved "
-            f"automatically. These {len(res.queue)} need you, each with a recommendation "
-            "already selected.")
+    UI.h("Review unresolved mappings", 2)
+    UI.lede(f"<b>{rs['auto_resolved']} of {rs['mappings_total']}</b> resolved automatically. "
+            f"Review the remaining {len(res.queue)}; recommended answers are preselected.")
 
     if not res.queue:
         UI.card("Nothing to review",
@@ -811,7 +808,7 @@ def step_resolve():
                 "Supplier mapping (CSV)",
                 applied.suppliers.to_csv(index=False).encode(),
                 "supplier_mapping.csv", "text/csv", use_container_width=True)
-        UI.note("Hand these back next time and this step is skipped.", cls="aw-micro",
+        UI.note("Reuse these mappings to skip this review next time.", cls="aw-micro",
                 style="margin-top:4px;")
 
     if awaiting_destination_rate:
@@ -861,11 +858,10 @@ def _note(text, colour=None):
 
 def step_assumptions():
     UI.eyebrow("Step 4 of 6")
-    UI.h("What we know, and what you have to tell us", 2)
-    UI.lede("Everything so far came out of your data. These are the choices.")
+    UI.h("Operating choices", 2)
 
     # --- paired caps and their dispatch targets --------------------------------
-    UI.eyebrow("Container limits, and when a box is full enough to send")
+    UI.eyebrow("Container limits and dispatch targets")
     for pair in C.LIMIT_PAIRS:
         cap_meta = C.CONFIG[pair["max"]]
         pct_meta = C.CONFIG[pair["pct"]]
