@@ -179,7 +179,7 @@ S.setdefault("kept_rates", {})    # a quoted figure held while our benchmark is 
 
 # Regenerated sample files have their own contract too. If an open browser tab is holding
 # an older seeded sample, replace it with that scenario's current bytes and return to the
-# first step. Real client uploads have no scenario id and are never touched.
+# first step. Unrecognised uploads have no scenario id and are never touched.
 DEMO_DATA_VERSION = "classified-codes-useful-marginal-v1"
 if S.get("demo_data_version") != DEMO_DATA_VERSION and S.scenario:
     _sample_charge = scenario_dir(S.scenario) / "charge_lines_raw.csv"

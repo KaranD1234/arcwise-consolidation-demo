@@ -1,9 +1,8 @@
 """Northgate Supply Co. -- the well-billed world, and the demo's primary scenario.
 
 A fictional UK importer of industrial components, buying out of Ningbo and Ho Chi
-Minh City. Nothing here is derived from a real client: the geography, suppliers,
-sites and rates were all chosen to be plausible and are deliberately unlike any live
-engagement.
+Minh City. The geography, suppliers, sites and rates were independently invented to
+be plausible demo inputs.
 
 Northgate's distinguishing feature is that its forwarder **itemises everything**.
 Every EXW component arrives on its own coded line, so the engine can rebuild almost
@@ -159,14 +158,7 @@ DELIVERY_SITES = [
         "raw": [("Hellmann Worldwide Logistics - Hannover", None)],
     },
     {
-        # Invented operator, invented town pairing.
-        #
-        # An earlier version of this world reused a town, an industrial-estate name and a
-        # Site_ID copied out of a live client's own mapping file. It looked incidental --
-        # the operator had been renamed, and the town is a plausible choice for any UK
-        # importer -- but the distinctive locality token and the identifier were theirs.
-        # Nothing here may be traceable to a live engagement, and that includes not
-        # writing the offending string into a comment explaining the fix.
+        # Independently invented operator and town pairing.
         "site_id": "UK_LUTTERWORTH", "site": "Lutterworth, UK", "country": "United Kingdom",
         "pod": "Felixstowe, United Kingdom",
         "raw": [("Harbrook Contract Logistics - Lutterworth", None)],

@@ -1,9 +1,7 @@
 """Arcwise design tokens, and the CSS that stops this looking like Streamlit.
 
-Tokens are ported from ``Codebase/arcwise/shared/theme/GeneralArcwiseThemeV2.ts`` — the
-Mantine theme the product itself runs on. Where that file states a number, this one uses
-it rather than something near it, because "near it" is what makes a demo look like a
-reproduction of the product instead of the product:
+These shared values are the source of truth for the demo UI. They keep native Streamlit
+components and the custom interface visually consistent:
 
 * **Type.** Inter. Body 14/1.6, captions 12, micro 11. Headings are the Mantine ``Title``
   scale — 28 / 24 / 20 / 16 / 14 / 12 — at **weight 500**, line-height 1.2, and no

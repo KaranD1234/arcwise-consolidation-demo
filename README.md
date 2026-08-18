@@ -352,10 +352,9 @@ round-trips this, so the claim is tested rather than asserted.
 
 ## Design
 
-The interface is meant to be indistinguishable from the product, so the tokens are taken
-from the product rather than approximated: `Codebase/arcwise/shared/theme/
-GeneralArcwiseThemeV2.ts` is the Mantine theme the app runs on, and where it states a
-number, `.streamlit/config.toml` and `app/theme.py` use that number.
+The interface uses the same Arcwise design language throughout. Shared values live in
+`.streamlit/config.toml` and `app/theme.py` so native Streamlit components and custom
+components remain visually consistent.
 
 | | The product, and therefore this |
 | :-- | :-- |
@@ -448,12 +447,10 @@ never be worse than giving us nothing.
 | `run.py` | orchestrator; yields progress events for the build ticker |
 | `validate.py` | proves all three demos are rehearsable |
 
-Ported from the live Jaguar engine (`Paul's Warehousing Problem/Jaguar Consolidation
-Project/V1 Final/consolidate.py`): the master-bill equipment rebuild, the pallet
-explosion, the arrival-order first-fit packer, the event-driven dispatch simulation
-and the code-1638 rate derivation. That file itself is not used here — it needs six
-controlled inputs and hard-aborts on an unmapped supplier, so pointing it at invented
-data would mean disabling the assertions that make it trustworthy.
+The engine includes a master-bill equipment rebuild, pallet explosion, arrival-order
+first-fit packer, event-driven dispatch simulation and auditable rate derivation. The
+demo implementation is self-contained and operates only on the invented datasets in
+this repository.
 
 ## The mess in the datasets
 
@@ -478,41 +475,11 @@ deliberately *not* generated: they cost demo time and move no number.
 The mess is realistic, never adversarial. There are no traps designed to look
 impressive.
 
-### Keeping client data out
+### Demo-data boundary
 
-Worth doing deliberately, because it went wrong once. An early version of Northgate
-reused a town, an industrial-estate name and a `Site_ID` copied out of the live client's
-own `delivery_site_mapping.csv` — the operator had been renamed, so it read as invented,
-and it was not. The same string had also propagated into the engine's region-hint list
-and into the comments explaining that list.
-
-The check that catches it compares every entity-level cell in the live client's CSVs
-against everything in this repository, and looks for whole values rather than words:
-
-```bash
-# from the demo root, with the live project alongside
-python3 - <<'EOF'
-import csv, pathlib, re
-live = pathlib.Path("../Paul's Warehousing Problem/Jaguar Consolidation Project/V1 Final")
-entities = {c.strip().lower() for p in live.glob("*.csv")
-            for row in list(csv.reader(open(p, encoding="utf-8", errors="ignore")))[1:]
-            for c in row
-            if len(c.strip()) > 5 and re.search(r"[A-Za-z]", c) and (" " in c or "_" in c)}
-demo = "".join(f.read_text(errors="ignore").lower()
-               for pat in ("data/**/*.csv", "generator/**/*.py", "engine/**/*.py",
-                           "app/**/*.py", "README.md")
-               for f in pathlib.Path(".").glob(pat))
-for hit in sorted(e for e in entities if e in demo):
-    print(hit)
-EOF
-```
-
-It currently reports 19 hits, and every one is either ported schema vocabulary the demo
-shares with the live engine on purpose (`ocean - fcl (aw)`, `per container`,
-`dest_delivery`, `port of discharge`) or a major port both a real and an invented
-importer would obviously use (Felixstowe, Ningbo, Gdansk, Yantian). **No supplier, no
-warehouse operator and no site name or identifier appears in both.** A token-level scan
-is not worth running — both are freight documents and share hundreds of ordinary words.
+All companies, suppliers, sites, identifiers, shipment records and commercial figures
+in this repository are invented for demonstration. The demo is self-contained and does
+not read from a client project or production data source.
 
 ### Regenerating
 
@@ -583,7 +550,5 @@ Post-build sliders that re-run on the results screen (the engine supports it; th
 does not yet), any chat, connector tiles, hosting or auth, and an in-app spreadsheet
 grid — the `.xlsx` download is the worksheet, and reinventing Excel is not the job.
 
-Also out of scope: the real Jaguar charge-line file has 39 charge codes this register
-does not recognise, carrying $10.2m, and it fails three of the thirteen controls when
-pointed at this engine. The failure is loud rather than hidden, which is correct, but
-widening the register is a separate job.
+Extending the charge register for a new client's source system is also out of scope for
+this demo. Unknown codes are surfaced by the controls rather than silently classified.

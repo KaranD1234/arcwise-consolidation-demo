@@ -600,7 +600,7 @@ RESOLVE = {
     # This is a HINT, not a classifier, and the distinction is the whole point. An
     # earlier version escalated a location only if it appeared on this list, which
     # meant every region the list had never heard of passed through as a town, with
-    # no warning. On real data that missed Kocaeli and Cremona while catching Kent
+    # no warning. Generic region names still need careful boundary matching.
     # -- and it caught Kent only because Kent was copied off a real file into the
     # list.
     #

@@ -1,5 +1,4 @@
-# Arcwise design tokens, ported from
-# Codebase/arcwise/shared/theme/GeneralArcwiseThemeV2.ts. Keep in sync with app/theme.py.
+# Arcwise design tokens. Keep in sync with app/theme.py.
 #
 # Everything here that *can* be a theme option is one, rather than a CSS override. Two
 # reasons. Streamlit derives colours it never exposes to CSS -- the tint behind a bordered
