@@ -234,6 +234,36 @@ def cached_resolution(charge_bytes, site_list_bytes):
     return resolve_mod.resolve(ingested.shipments, site_list=site_list)
 
 
+@st.cache_data(show_spinner=False)
+def cached_viability(charge_bytes, site_list_bytes, rate_card_bytes,
+                     overrides_items, answers_items, service_pricing_items):
+    """Return the commercial outcome for the current settings before Build.
+
+    This is the same engine call as Build, without the paced progress events. It keeps a
+    zero-opportunity configuration off the results screen instead of asking the user to
+    discover there that every candidate lane was restored to today's operation.
+    """
+    try:
+        result = engine.run(
+            _to_temp(charge_bytes),
+            rate_card=cached_frame(rate_card_bytes) if rate_card_bytes else None,
+            site_list=cached_frame(site_list_bytes) if site_list_bytes else None,
+            overrides=dict(overrides_items) or None,
+            answers=dict(answers_items) or None,
+            service_pricing=dict(service_pricing_items) or None,
+        )
+    except engine.MissingRates:
+        # Step 2 normally prevents this. Keep the settings page usable if a stale
+        # browser session loses one of its uploaded files between reruns.
+        return None
+    summary = result["summary"]
+    return {
+        "consolidated_lanes": int(summary["consolidated_lanes"]),
+        "saving_usd": float(summary["saving_usd"]),
+        "containers_saved": int(summary["containers_saved"]),
+    }
+
+
 def goto(step):
     S.step = step
     st.rerun()
@@ -524,9 +554,6 @@ def step_references():
     card_index = rates_mod.index_rate_card(
         cached_frame(S.rate_card_bytes) if S.rate_card_bytes else None)
     rows = file_status(plan, card_index)
-    priced = sum(1 for cs in plan.values() if not cs.needs_rate)
-    unpriced = len(plan) - priced
-    needed = [d for d, status, _ in rows if status == "needed"]
 
     # Which of the unpriced legs can only be fixed *here*.
     #
@@ -540,21 +567,9 @@ def step_references():
         and not any(s["kind"] == "service"
                     for s in C.COMPONENTS_BY_KEY[cs.key]["sources"]))
 
-    # One line, and it moves as files arrive. That movement is the most product-like
-    # thing in the flow, so it is the one piece of the sourcing story worth keeping here.
-    #
-    # One line, singular: what we have just read and what is still missing are the same
-    # question asked twice, and answering them in two stacked callouts put two green boxes
-    # above a four-row list that was already saying it a third time.
-    state = (f"<b>{priced} of {len(plan)}</b> costs priced, <b>{unpriced}</b> still need "
-             "a file." if unpriced else f"All <b>{len(plan)}</b> costs priced.")
-    tone = "ask" if unpriced else "ok"
-    if S.last_read:
-        docs, read = S.last_read
-        S.last_read = None
-        UI.summary_line(f"Read your <b>{UI.named(docs)}</b> — {read} rates. {state}", tone)
-    else:
-        UI.summary_line(state, tone)
+    # The rows below already show what is present and what is missing. A summary banner
+    # repeated the same counts without changing the next action.
+    S.last_read = None
 
     for doc, status, detail in rows:
         st.markdown(UI.file_row(doc, status, detail), unsafe_allow_html=True)
@@ -585,12 +600,9 @@ def step_references():
                 reset_refs()
 
     if file_only:
-        one = len(file_only) == 1
         UI.summary_line(
-            f"<b>No price for {', '.join(file_only).lower()}.</b> You pay for "
-            + ("it" if one else "them")
-            + " today, so leaving it off both sides would flatter the saving. A rate card "
-              "is the only fix.", tone="warn")
+            f"<b>Missing rates: {', '.join(file_only).lower()}.</b> "
+            "Add the rate card before continuing.", tone="warn")
 
     nav(back="data", forward=None if file_only else "resolve",
         forward_note="Drop the file above in and this clears." if file_only else "")
@@ -880,15 +892,13 @@ def step_assumptions():
             st.markdown(
                 f"<div class='aw-num' style='padding-top:26px;font-size:13px;"
                 f"font-weight:500;color:{T.INK_700};'>"
-                f"{C.describe_pair(cfg_now, pair)}</div>"
-                f"<div class='aw-micro' style='margin-top:3px;'>"
-                f"{pct_meta['source']}</div>",
+                f"{C.describe_pair(cfg_now, pair)}</div>",
                 unsafe_allow_html=True)
 
     cols = st.columns(3)
     with cols[0]:
         _num_input("OUT_WEIGHT_MAX_KG", "Outbound container payload cap (kg)", fmt="%.0f")
-        _note("A limit, not a target. Nothing sails because it is heavy enough.")
+        _note("Hard cap; not a dispatch trigger.")
 
     # --- operating choices ----------------------------------------------------
     #
@@ -899,7 +909,7 @@ def step_assumptions():
     # limits are the ones it always does. The body of an expander runs whether or not it is
     # open, so every widget below still exists and still holds its value -- which is why
     # this is an expander and not an `if show:`.
-    with st.expander("Operating choices — dwell, pooling, the day a box sails"):
+    with st.expander("Dwell, pooling and sailing delay"):
         cols = st.columns(3)
         with cols[0]:
             _num_input("MAX_DWELL_DAYS", "Maximum warehouse dwell (days)", fmt="%.0f")
@@ -927,28 +937,14 @@ def step_assumptions():
     #
     # What changes with a tender on file is what *else* they decide, so the line inside
     # says one thing or the other rather than describing a comparison that is not running.
-    has_tender = bool(sourcing_mod.card_hits(card_index, "FTL", ["INBOUND_FTL"]))
     with st.expander("Inbound loads — how much fits on one truck"):
-        st.markdown(
-            f"<div class='aw-note' style='margin:-2px 0 12px 0;max-width:760px;'>"
-            + ("Cargo is collected shipment by shipment today. These caps set how many "
-               "loads that takes — what the warehouse charges to receive, and how many "
-               "trailers your tender is costed on."
-               if has_tender else
-               "Cargo is collected shipment by shipment today. These caps set how many "
-               "loads that takes — what the warehouse charges to receive, and what a "
-               "trailer rate would have to beat. You have not given us one.")
-            + "</div>", unsafe_allow_html=True)
         cols = st.columns(3)
         with cols[0]:
             _num_input("TRAILER_PALLET_MAX", "Pallets on one load", fmt="%.0f")
-            _note(C.CONFIG["TRAILER_PALLET_MAX"]["source"])
         with cols[1]:
             _num_input("TRAILER_CBM_MAX", "Volume cap (CBM)", fmt="%.1f")
-            _note(C.CONFIG["TRAILER_CBM_MAX"]["source"])
         with cols[2]:
             _num_input("TRAILER_WEIGHT_MAX_KG", "Payload cap (kg)", fmt="%.0f")
-            _note(C.CONFIG["TRAILER_WEIGHT_MAX_KG"]["source"])
 
     # --- the consolidation service --------------------------------------------
     #
@@ -978,19 +974,7 @@ def step_assumptions():
             if unquoted else
             f"Warehouse rate card — all {total_service} priced by your quote",
             expanded=bool(unquoted) or bool(S.get("tweak_service"))):
-        st.markdown(
-            f"<div class='aw-note' style='max-width:760px;margin:-4px 0 12px 0;'>"
-            + ("No invoice can evidence these — it is work you do not buy yet. They come "
-               "off your forwarder's quote, exactly as it arrived."
-               if n_fixed else
-               "No invoice can evidence these — it is work you do not buy yet, so they "
-               "have to come off your forwarder's quote.")
-            + "</div>", unsafe_allow_html=True)
-
         tweak = st.toggle("Let me enter or change these figures", key="tweak_service")
-        UI.note("Anything you type is recorded as yours, not ours." if tweak else
-                "Off, because a quoted rate is a fact rather than a setting.",
-                cls="aw-micro", style="margin:-8px 0 14px 2px;")
 
         missing = []
         for row_keys in [C.SERVICE_RATE_KEYS[:3], C.SERVICE_RATE_KEYS[3:]]:
@@ -1052,19 +1036,40 @@ def step_assumptions():
         # Outside the expander, so the reason the Build button is gone is on screen even
         # when the group it refers to is folded shut.
         UI.summary_line(
-            f"<b>No price for {', '.join(missing).lower()}.</b> This cost exists only on "
-            "the future side, so a figure of ours would carry the saving. No model until "
-            "you price it.", tone="warn")
+            f"<b>Missing warehouse rates: {', '.join(missing).lower()}.</b> "
+            "Add the consolidation quote or enter the rates above.", tone="warn")
+
+    viability = None
+    if not missing:
+        viability = cached_viability(
+            S.charge_bytes, S.site_list_bytes, S.rate_card_bytes,
+            tuple(sorted(S.overrides.items())),
+            tuple(sorted(S.answers.items())),
+            tuple(sorted(S.service_pricing.items())),
+        )
+        if viability and viability["consolidated_lanes"] == 0:
+            st.markdown(
+                "<div class='aw-note' style='margin:12px 0 8px 2px;max-width:760px;'>"
+                "<b>These choices leave no viable consolidation lane.</b> "
+                "The higher volume and pallet thresholds delay dispatch until the "
+                "remaining lanes no longer clear the saving rule. Use the recommended "
+                "operating choices before building."
+                "</div>", unsafe_allow_html=True)
+            if st.button("Use recommended operating choices"):
+                for key, meta in C.CONFIG.items():
+                    if meta["group"] in {"physical", "dispatch"}:
+                        S.overrides.pop(key, None)
+                st.rerun()
 
     if st.button("Reset to recommended"):
         S.overrides, S.service_pricing, S.kept_rates = {}, {}, {}
         st.rerun()
 
-    nav(back="resolve", forward=None if missing else "build",
+    zero_viable = bool(viability and viability["consolidated_lanes"] == 0)
+    nav(back="resolve", forward=None if missing or zero_viable else "build",
         forward_label="Build the model",
-        forward_note=("The engine runs against your file now — nothing is pre-computed."
-                      if not missing else
-                      "Add your consolidation quote on step 2, or type the figures above."))
+        forward_note=("Add your consolidation quote on step 2, or type the figures above."
+                      if missing else ""))
 
 
 # --------------------------------------------------------------------------------------
