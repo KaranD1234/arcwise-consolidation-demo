@@ -1040,6 +1040,7 @@ def step_assumptions():
             "Add the consolidation quote or enter the rates above.", tone="warn")
 
     viability = None
+    threshold_block = False
     if not missing:
         viability = cached_viability(
             S.charge_bytes, S.site_list_bytes, S.rate_card_bytes,
@@ -1048,25 +1049,56 @@ def step_assumptions():
             tuple(sorted(S.service_pricing.items())),
         )
         if viability and viability["consolidated_lanes"] == 0:
-            st.markdown(
-                "<div class='aw-note' style='margin:12px 0 8px 2px;max-width:760px;'>"
-                "<b>These choices leave no viable consolidation lane.</b> "
-                "The higher volume and pallet thresholds delay dispatch until the "
-                "remaining lanes no longer clear the saving rule. Use the recommended "
-                "operating choices before building."
-                "</div>", unsafe_allow_html=True)
-            if st.button("Use recommended operating choices"):
-                for key, meta in C.CONFIG.items():
-                    if meta["group"] in {"physical", "dispatch"}:
+            threshold_keys = (
+                "OUT_CBM_MAX", "OUT_CBM_TARGET_PCT",
+                "OUT_PALLET_MAX", "OUT_PALLET_TARGET_PCT",
+            )
+            current_cfg = C.values(S.overrides)
+            recommended_cfg = C.values()
+            both_thresholds_raised = (
+                current_cfg["OUT_CBM_TARGET"] > recommended_cfg["OUT_CBM_TARGET"]
+                and current_cfg["OUT_PALLET_TARGET"]
+                > recommended_cfg["OUT_PALLET_TARGET"]
+            )
+
+            # Prove the cause before blocking. A zero can also be a legitimate result of
+            # a low payload cap, expensive warehouse quote or restrictive inbound truck.
+            # Those are modelling choices and must still be allowed through to Results.
+            if both_thresholds_raised:
+                recommended_thresholds = dict(S.overrides)
+                for key in threshold_keys:
+                    recommended_thresholds.pop(key, None)
+                with_recommended_thresholds = cached_viability(
+                    S.charge_bytes, S.site_list_bytes, S.rate_card_bytes,
+                    tuple(sorted(recommended_thresholds.items())),
+                    tuple(sorted(S.answers.items())),
+                    tuple(sorted(S.service_pricing.items())),
+                )
+                threshold_block = bool(
+                    with_recommended_thresholds
+                    and with_recommended_thresholds["consolidated_lanes"] > 0)
+
+            if threshold_block:
+                st.error(
+                    "**These CBM and pallet settings leave no viable consolidation "
+                    "lane.** They move the dispatch thresholds to "
+                    f"{current_cfg['OUT_CBM_TARGET']:,.1f} CBM or "
+                    f"{current_cfg['OUT_PALLET_TARGET']:,.0f} pallets; with this file, "
+                    "every candidate then fails the saving rule. The recommended "
+                    f"thresholds are {recommended_cfg['OUT_CBM_TARGET']:,.1f} CBM or "
+                    f"{recommended_cfg['OUT_PALLET_TARGET']:,.0f} pallets. Reset these "
+                    "settings to continue."
+                )
+                if st.button("Use recommended CBM and pallet settings"):
+                    for key in threshold_keys:
                         S.overrides.pop(key, None)
-                st.rerun()
+                    st.rerun()
 
     if st.button("Reset to recommended"):
         S.overrides, S.service_pricing, S.kept_rates = {}, {}, {}
         st.rerun()
 
-    zero_viable = bool(viability and viability["consolidated_lanes"] == 0)
-    nav(back="resolve", forward=None if missing or zero_viable else "build",
+    nav(back="resolve", forward=None if missing or threshold_block else "build",
         forward_label="Build the model",
         forward_note=("Add your consolidation quote on step 2, or type the figures above."
                       if missing else ""))
